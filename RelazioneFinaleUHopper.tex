@@ -1,0 +1,115 @@
+\documentclass[a4paper,11pt]{article} 
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{subfigure}
+\usepackage{fancyhdr}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{calligra}
+\usepackage{makeidx}
+\usepackage{amssymb}
+\usepackage{makecell}
+\usepackage{amscd} %x diagrammi matematici
+\usepackage{marvosym}
+\usepackage{enumitem}
+\theoremstyle{plain}
+\usepackage[a4paper, inner=1.5cm, outer=2.5cm, top=2.5cm, 
+bottom=2.5cm, bindingoffset=1cm]{geometry} 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pifont}
+\newcommand{\sid}[1]{\color{red} #1 \color{black} }
+\newcommand{\barbi}[1]{\color{blue} #1 \color{black} }
+\newcommand{\simo}[1]{\color{violet} #1 \color{black}}
+\usepackage{mathtools}
+\newcommand{\fsl}[1]{\ensuremath{\mathrlap{\!\not{\phantom{#1}}}#1}}% \fsl{<symbol>}
+
+\begin{document}
+\title{\huge RELAZIONE FINALE TIROCINIO}
+\author{Sara Frizzera}
+\date{15/09/2018}
+\maketitle
+
+\section*{Dati}
+SARA FRIZZERA - [MAT. 185274]\\
+Dipartimento di Ingegneria e Scienza dell’Informazione\\
+Corso di studio:	[0330G] - Ingegneria dell'informazione e Organizzazione D'impresa\\
+Ordinamento: [0330GR08] - Ordinamento 2008\\
+Email: sara.frizzera@studenti.unitn.it\\
+Recapito telefonico: +39 388 9512366\\
+Progetto di tirocinio: “A chatbot for the Internet of Things” aka "Talk2Fiesta"
+
+\section*{U-Hopper}
+U-Hopper è un'azienda R\&D che si occupa di produzione software, consulenza informatica e attività connesse.
+Utilizza le competenze maturate dal team nell’ambito dei big data analytics, delle tecnologie semantiche, delle tecnologie mobili e della localizzazione indoor.
+E' nata a Trento a fine 2010 ed è diventata operativa nel corso del 2012. Nell’anno 2013 è entrata nella business community dell’EIT ICT Labs che, attraverso un team europeo di business developers, supporta l'accelerazione delle start-up innovative sul mercato europeo.
+Tra i propri clienti U-Hopper annovera IGP Decaux, Telecom Italia, Groupalia, Trenta e Trentino Networks. U-Hopper è attiva nello sviluppo di tecnologie e prodotti innovativi in partnership con IBM, SINTEF, Quuppa, EVRYTHNG, Snowflake Software, Trilogis ed altri leader del settore.
+
+\section*{Progetto “A chatbot for the Internet of Things”}
+
+Il progetto Talk2Fiesta nasce come servizio di informazione conversazionale per Fiesta-IoT.
+
+\subsection*{Fiesta-IoT}
+Fiesta IoT è un’entità finanziata dall’Unione Europea, il cui obiettivo è quello di condividere e riutilizzare i dati provenienti da testbeds IoT eterogenei, basandosi su soluzioni semantiche. \\ 
+La piattaforma di Fiesta garantisce l’accesso a 10 testbeds, che forniscono dati tramite sensori posizionati all'interno e all'esterno degli edifici in diverse città europee.\\
+Il progetto Talk2Fiesta opera con due di questi testbeds:
+\begin{enumerate}
+\item SmartSantander: fornisce accesso ai sensori di temperatura, umidità, illuminazione, rumore ecc. nella città di Santander, in Spagna.
+\item SmartICS: fornisce accesso ai sensori di temperatura, umidità, illuminazione e presenza umana nell’università di Surrey, in Inghilterra.
+\end{enumerate} 
+Lo scopo che si pone Fiesta è quello di trovare soluzioni all'eterogeneità dei BigData. La diversificazione dei dati IoT – infatti - rende difficile l'interoperabilità di settori verticali differenti. Ciò comporta la formazione di “data silos”, un decremento dell'efficienza e del potenziale effettivo di questi dati.
+La soluzione proposta da Fiesta si basa sull'utilizzo della tassonomia e delle ontologie per classificare i meta-dati e garantire l'interoperabilità semantica.
+
+
+\subsection*{Attività svolte}
+Lo scopo del progetto Talk2Fiesta è la creazione di un chat-bot per l’estrazione di dati e conoscenze utilizzate per rispondere alle domande degli utenti, tramite richieste alle APIs di Fiesta-IoT. Al contempo esegue test di convalida con SmartSantander e SmartICS, sperimentando le scoperte semantiche, la disponibilità, affidabilità e latenza del servizio fornito da Fiesta-IoT. \\
+Per l'implmentazione del chatbot è stato utilizzato il framework Wit.ai.\\
+Wit è basato sul Natural Language Processing (NLP) ed è in grado di trasformare le frasi in dati strutturati.
+L'allenamento del chat-bot è mirato all'individuazione di entità specifiche - data/ora, città e aggregazione - e di intenti - temperatura, umidità, illuminazione, rumore. \\
+Ogni intento viene poi collegato ad un'azione, implementata in Python, che gestisce le entità e manda una richiesta specifica alle APIs di Fiesta. \\
+Il codice che gestisce la logica del chatbot è stato implementato interamente in Python e integrato con le librerie di Flask, Json e Thread.\\
+Le richieste alle APIs di Fiesta sono state implementate in SparQL.\\
+Segue uno schema che rappresenta la struttura del progetto:
+\vspace{0.2cm}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.9]{scheme.png}
+\caption{Struttura del progetto}
+\end{figure}
+\vspace{1cm}
+\begin{enumerate}
+\item L'utente invia un messaggio tramite un framework di messaggistica all'API del server U-Hopper. 
+\item U-Hopper invia il testo a Wit.ai per il riconoscimento di entità e intenti.
+\item Dopo aver ricevuto le informazioni aggiuntive da Wit.ai, è possibile associare un intento ad un'azione e quindi inviare un richiesta SparQL a Fiesta.
+\item Con i dati forniti da Fiesta è possibile costruire una risposta alla domanda dell'utente e inviarla al framework di messaggistica
+\end{enumerate}
+
+
+\section*{Raggiungimento obbiettivi}
+Gli obbiettivi raggiunti durante il tirocinio sono:
+\begin{enumerate}
+\item Acquisizione competenze relative a framework per l'implementazione e il deployment di chatbot 
+\item Acquisizione competenze nella programmazione ad oggetti in Python
+\item Acquisizione competenze nella creazione e gestione di server in Flask
+\item Acquisizione conoscenze relative ai protocolli per l'interfacciamento con dispositivi IoT 
+\item Acquisizione competenze di comunicazione interpersonale e metodo di lavoro in un ambiente internazionale e multiculturale 
+\item Acquisizione competenze nella gestione, suddivisione e condivisione del lavoro (SourceTree)
+\item Acquisizione conoscenza di metodologie di lavoro agile 
+\item Acquisizione competenze di lavoro in team 
+\end{enumerate}
+\section*{Considerazioni finali}
+Il percorso di tirocinio è stato stimolante sia dal punto di vista formativo che da quello personale.
+Gli obbiettivi prefissati sono stati largamente soddisfatti.\\
+Il giudizio finale è sicuramente positivo.
+
+
+
+\end{document}
